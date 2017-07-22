@@ -1,0 +1,20 @@
+package db;
+
+import exception.DatabaseException;
+
+/**
+ *
+ * @author Dries
+ */
+public class DatabaseFactory {
+    
+    public static Database getDatabase(String dbType) throws DatabaseException {
+        if(dbType.equalsIgnoreCase("Memory")){
+            return new DatabaseInMemory();
+        }
+        if(dbType.equalsIgnoreCase("Relational")){
+            return new DatabaseJPA();
+        }
+        return null;
+    }
+}
