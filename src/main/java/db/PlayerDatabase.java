@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Dries
  */
-public abstract class Database {
+public abstract class PlayerDatabase {
     
     public abstract List<Player> getPlayers() throws DatabaseException;
     public abstract Player getPlayer(Long id) throws DatabaseException;

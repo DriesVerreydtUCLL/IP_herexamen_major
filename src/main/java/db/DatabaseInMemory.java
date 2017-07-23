@@ -10,9 +10,10 @@ import java.util.List;
  *
  * @author Dries
  */
-public class DatabaseInMemory extends Database {
+public class DatabaseInMemory extends PlayerDatabase {
     
     List<Player> players;
+    private Long id = Long.MIN_VALUE;
     
     public DatabaseInMemory() throws DatabaseException {
         players = new ArrayList<>();
@@ -56,19 +57,42 @@ public class DatabaseInMemory extends Database {
 
     @Override
     public void addPlayer(Player player) throws DatabaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(contains(player.getId())){
+            throw new DatabaseException("A player with " + player.getId() + " is already present in the database.");
+        } else {
+            player.setId(id);
+            id++;
+            players.add(player);
+        }
     }
 
     @Override
     public void removePlayer(Long id) throws DatabaseException {
-        Player p = getPlayer(id);
-        players.remove(p);
+        if(contains(id)){
+            Player p = getPlayer(id);
+            players.remove(p);
+        } else {
+            throw new DatabaseException("A player with " + id + " is not present in the database.");
+        }
     }
 
     @Override
     public void updatePlayer(Player player) throws DatabaseException {
-        removePlayer(player.getId());
-        addPlayer(player);
+        if(contains(player.getId())){
+            players.remove(player);
+            players.add(player);
+        } else {
+            throw new DatabaseException("A player with " + player.getId() + " is not present in the database.");
+        }
     }
     
+    private boolean contains(Long id){
+        boolean contains = false;
+        for(Player p : players){
+            if(p.getId().equals(id)){
+                contains = true;
+            }
+        }
+        return contains;
+    }
 }

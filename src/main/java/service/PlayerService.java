@@ -1,11 +1,10 @@
 package service;
 
-import db.Database;
+import db.PlayerDatabase;
 import db.DatabaseFactory;
 import domain.Player;
 import exception.DatabaseException;
 import exception.ServiceException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ import java.util.List;
  */
 public class PlayerService {
     
-    private Database db;
+    private PlayerDatabase db;
     
     public PlayerService(String dbType) throws ServiceException{
         try {
@@ -25,13 +24,21 @@ public class PlayerService {
     }
     
     public List<Player> getPlayers() throws ServiceException {
-        List<Player> players = new ArrayList<>();
         try {
-            players = db.getPlayers();
+            List<Player> players = db.getPlayers();
+            return players;
         } catch (DatabaseException e){
             throw new ServiceException(e.getMessage(),e);
         }
-        return players;
+    }
+    
+    public Player getPlayer(Long id) throws ServiceException {
+        try {
+            Player player = db.getPlayer(id);
+            return player;
+        } catch (DatabaseException e){
+            throw new ServiceException(e.getMessage(),e);
+        }
     }
     
     public void addPlayer(Player player) throws ServiceException {

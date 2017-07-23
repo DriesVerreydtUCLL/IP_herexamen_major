@@ -2,6 +2,7 @@ package db;
 
 import domain.Player;
 import exception.DatabaseException;
+import exception.DomainException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -12,10 +13,32 @@ import javax.persistence.TypedQuery;
  *
  * @author Dries
  */
-public class DatabaseJPA extends Database {
+public class DatabaseJPA extends PlayerDatabase {
     
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PU");
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    EntityManagerFactory entityManagerFactory;
+    EntityManager entityManager;
+    
+    public DatabaseJPA() throws DatabaseException {
+        entityManagerFactory = Persistence.createEntityManagerFactory("PU");
+        entityManager = entityManagerFactory.createEntityManager();
+        
+        try {
+            Player hazard = new Player("Eden","Hazard",10,5);
+            Player debruyne = new Player("Kevin","De Bruyne",7,3);
+            Player nainggolan = new Player("Radja","Nainggolan",4,1);
+            Player vertonghen = new Player("Jan","Vertonghen",5,1);
+            Player courtois = new Player("Thibaut","Courtois",1,0);
+            
+            addPlayer(hazard);
+            addPlayer(debruyne);
+            addPlayer(nainggolan);
+            addPlayer(vertonghen);
+            addPlayer(courtois);
+            
+        } catch (DomainException e){
+            throw new DatabaseException(e.getMessage(),e);
+        }
+    }
     
     @Override
     public List<Player> getPlayers() throws DatabaseException {

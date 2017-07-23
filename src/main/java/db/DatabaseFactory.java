@@ -8,7 +8,7 @@ import exception.DatabaseException;
  */
 public class DatabaseFactory {
     
-    public static Database getDatabase(String dbType) throws DatabaseException {
+    public static PlayerDatabase getDatabase(String dbType) throws DatabaseException {
         if(dbType.equalsIgnoreCase("Memory")){
             return new DatabaseInMemory();
         }
