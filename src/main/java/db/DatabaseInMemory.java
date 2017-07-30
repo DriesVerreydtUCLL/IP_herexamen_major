@@ -2,7 +2,6 @@ package db;
 
 import domain.Player;
 import exception.DatabaseException;
-import exception.DomainException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
  */
 public class DatabaseInMemory extends PlayerDatabase {
     
-    List<Player> players;
+    private List<Player> players;
     private Long id = Long.MIN_VALUE;
     
     public DatabaseInMemory() throws DatabaseException {
@@ -25,14 +24,14 @@ public class DatabaseInMemory extends PlayerDatabase {
             Player vertonghen = new Player("Jan","Vertonghen",5,1);
             Player courtois = new Player("Thibaut","Courtois",1,0);
             
-            players.add(hazard);
-            players.add(debruyne);
-            players.add(nainggolan);
-            players.add(vertonghen);
-            players.add(courtois);
+            addPlayer(hazard);
+            addPlayer(debruyne);
+            addPlayer(nainggolan);
+            addPlayer(vertonghen);
+            addPlayer(courtois);
             
-        } catch (DomainException e){
-            throw new DatabaseException("Error while setting up in memory db.",e);
+        } catch (Exception e){
+            throw new DatabaseException(e.getMessage(),e);
         }
                 
     }
@@ -57,11 +56,14 @@ public class DatabaseInMemory extends PlayerDatabase {
 
     @Override
     public void addPlayer(Player player) throws DatabaseException {
-        if(contains(player.getId())){
-            throw new DatabaseException("A player with " + player.getId() + " is already present in the database.");
-        } else {
+        if(player.getId() == null){
             player.setId(id);
             id++;
+        }
+        if(contains(player.getId())){
+            System.out.println("contains");
+            throw new DatabaseException("A player with " + player.getId() + " is already present in the database.");
+        } else {
             players.add(player);
         }
     }
@@ -89,10 +91,13 @@ public class DatabaseInMemory extends PlayerDatabase {
     private boolean contains(Long id){
         boolean contains = false;
         for(Player p : players){
+            System.out.println(p.getFirstName());
+            System.out.println(p.getId());
             if(p.getId().equals(id)){
                 contains = true;
             }
         }
         return contains;
     }
+    
 }

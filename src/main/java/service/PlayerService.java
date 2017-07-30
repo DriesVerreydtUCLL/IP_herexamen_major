@@ -19,7 +19,7 @@ public class PlayerService {
         try {
             db = DatabaseFactory.getDatabase(dbType);
         } catch (DatabaseException e){
-            throw new ServiceException("Error while setting up the service database.",e);
+            throw new ServiceException(e.getMessage(),e);
         }
     }
     
@@ -45,7 +45,7 @@ public class PlayerService {
         try{
             db.addPlayer(player);
         } catch (DatabaseException e){
-            throw new ServiceException("Error while adding player in the database.",e);
+            throw new ServiceException(e.getMessage(),e);
         }
     }
     
@@ -53,7 +53,7 @@ public class PlayerService {
         try{
             db.removePlayer(id);
         } catch (DatabaseException e){
-            throw new ServiceException("Error while removing player in the database.",e);
+            throw new ServiceException(e.getMessage(),e);
         }
     }
     
@@ -61,7 +61,7 @@ public class PlayerService {
         try{
             db.updatePlayer(player);
         } catch (DatabaseException e){
-            throw new ServiceException("Error while updating player in the database.",e);
+            throw new ServiceException(e.getMessage(),e);
         }
     }
     
@@ -91,4 +91,5 @@ public class PlayerService {
         }
         return topScorer;
     }
+    
 }

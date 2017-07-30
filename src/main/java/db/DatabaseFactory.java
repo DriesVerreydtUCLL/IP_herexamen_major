@@ -12,7 +12,7 @@ public class DatabaseFactory {
         if(dbType.equalsIgnoreCase("Memory")){
             return new DatabaseInMemory();
         }
-        if(dbType.equalsIgnoreCase("Relational")){
+        if(dbType.equalsIgnoreCase("JPA")){
             return new DatabaseJPA();
         }
         return null;

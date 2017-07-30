@@ -15,29 +15,27 @@ import static org.junit.Assert.*;
 public class PlayerServiceIT {
     
     private static PlayerService instance;
-    private static final String dbType = "Memory";
+    private static final String dbType = "JPA";
     
     public PlayerServiceIT() {
     }
     
     @BeforeClass
-    public static void setUpClass() {
-        
+    public static void setUpClass() throws ServiceException {
+        instance = new PlayerService(dbType);
     }
     
     @AfterClass
-    public static void tearDownClass() {
-        
+    public static void tearDownClass() throws ServiceException {
+        instance = null;
     }
     
     @Before
     public void setUp() throws ServiceException {
-        instance = new PlayerService(dbType);
     }
     
     @After
-    public void tearDown() {
-        instance = null;
+    public void tearDown() throws ServiceException {
     }
 
     /**
@@ -60,11 +58,14 @@ public class PlayerServiceIT {
     public void testGetPlayer() throws Exception {
         System.out.println("getPlayer");
         Player player = new Player("Dries","Verreydt",99,10);
-        System.out.println(player.getId());
+        try{
         instance.addPlayer(player);
-        System.out.println(player.getId());
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         Player result = instance.getPlayer(player.getId());
         assertEquals(player, result);
+        instance.removePlayer(player.getId());
     }
     
     /**
@@ -83,6 +84,7 @@ public class PlayerServiceIT {
             }
         }
         assertTrue(contains);
+        instance.removePlayer(player.getId());
     }
 
     /**
@@ -119,6 +121,7 @@ public class PlayerServiceIT {
         instance.updatePlayer(player);
         String firstName = instance.getPlayer(player.getId()).getFirstName();
         assertEquals(firstName,expName);
+        instance.removePlayer(player.getId());
     }
 
     /**
