@@ -1,6 +1,7 @@
 package controller;
 
 import domain.Player;
+import domain.PlayerValidator;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
@@ -23,6 +24,8 @@ import service.PlayerService;
 @RequestMapping(value="/player")
 public class PlayerController {
     
+    @Autowired
+    private PlayerValidator validator;
     private final PlayerService service;
     
     public PlayerController(@Autowired PlayerService service){
@@ -46,8 +49,9 @@ public class PlayerController {
         return new ModelAndView("playerForm", "player", new Player());
     }
     
-    @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(Player player, BindingResult result){
+    @RequestMapping(value="/save", method = RequestMethod.POST)
+    public ModelAndView save(@ModelAttribute("player") Player player, BindingResult result){
+        validator.validate(player, result);
         if(result.hasErrors()){
             return new ModelAndView("playerForm", "player", player);
         }
@@ -63,7 +67,7 @@ public class PlayerController {
         }
     }
     
-    @RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value="/delete/{id}")
     public String deletePlayer(@PathVariable Long id, RedirectAttributes redirectAttrs){
         try {
             service.removePlayer(id);

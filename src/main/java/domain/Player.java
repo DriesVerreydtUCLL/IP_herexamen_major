@@ -38,10 +38,7 @@ public class Player implements Serializable {
         return firstName;
     }
 
-    public void setFirstName(String firstName) throws DomainException {
-        if(firstName == null || firstName.equals("")){
-            throw new DomainException("The first name is empty.");
-        }
+    public void setFirstName(String firstName){
         this.firstName = firstName;
     }
 
@@ -49,10 +46,7 @@ public class Player implements Serializable {
         return lastName;
     }
 
-    public void setLastName(String lastName) throws DomainException {
-         if(lastName == null || lastName.equals("")){
-            throw new DomainException("The last name is empty.");
-        }
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -60,10 +54,7 @@ public class Player implements Serializable {
         return playerNumber;
     }
 
-    public void setPlayerNumber(int playerNumber) throws DomainException {
-        if(playerNumber == 0 || playerNumber < 0 || playerNumber > 99){
-            throw new DomainException("The player number is not valid.");
-        }
+    public void setPlayerNumber(int playerNumber) {
         this.playerNumber = playerNumber;
     }
 
@@ -71,10 +62,7 @@ public class Player implements Serializable {
         return goals;
     }
 
-    public void setGoals(int goals) throws DomainException {
-         if(goals < 0){
-            throw new DomainException("The number of goals is not valid.");
-        }
+    public void setGoals(int goals) {
         this.goals = goals;
     }
     

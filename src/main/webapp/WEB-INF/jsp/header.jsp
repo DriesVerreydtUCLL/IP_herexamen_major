@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header>
     <nav>
          <ul>
@@ -9,4 +10,10 @@
     <h1>
 		<span>Belgian Red Devils</span>
     </h1>
+        <c:if test="${pageContext.request.userPrincipal.authenticated}">
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+            <input type ="submit" value="Log out">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </form>
+        </c:if>   
 </header>

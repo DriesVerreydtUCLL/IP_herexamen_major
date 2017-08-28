@@ -6,24 +6,44 @@
     <jsp:include page="head.jsp">
         <jsp:param name="title" value="New Player Form"/>
     </jsp:include>
-   
+    <style>
+        .error {
+            color: #FF0000;
+        }
+
+        .errorbox {
+            background-color: #888;
+            border: 2px solid #FF0000;
+        }
+    </style>
     <body>
         <%@include file="header.jsp"%>
         <main>
-            <form id="playerForm" method="POST" action="${pageContext.request.contextPath}/player.htm" modelAttribute="player">
+            <form:form method="POST" commandName="player" action="${pageContext.request.contextPath}/player/save.htm">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-                <p><label for="playerID">Player ID</label><input type="text" id="playerID" name="playerID"
-                 value="${player.id}"> </p>
-                <p ><label for="firstName">First name</label><input type="text" id="firstName" name="firstName"
-                 value="${player.firstName}"> </p>
-                <p><label for="lastName">Last name</label><input type="text" id="lastName" name="lastName"
-                 value="${player.lastName}"> </p>
-                <p><label for="playerNumber">Player number</label><input type="number" id="playerNumber" 
-                          name="playerNumber" value="${player.playerNumber}"></p>
-                <p><label for="Goals">Number of goals</label><input type="number" id="goals"  name="goals"
-                 value="${player.goals}"> </p>
+                <form:errors path="*" cssClass="errorbox" element="div" />
+                 <p>
+                    <form:label path="id">Player ID</form:label>
+                    <form:input id="id" path="id" /> 
+                    <form:errors path="id" cssClass="error" element="div"/></p>
+                <p>
+                    <form:label path="firstName">First name</form:label>
+                    <form:input id="firstName" path="firstName" /> 
+                    <form:errors path="firstName" cssClass="error" element="div"/></p>
+                <p>
+                    <form:label path="lastName">Last name</form:label>
+                    <form:input id="lastName" path="lastName" />
+                    <form:errors path="lastName" cssClass="error" element="div"/></p>
+                <p>
+                    <form:label path="playerNumber">Player number</form:label>
+                    <form:input id="playerNumber" path="playerNumber" />
+                    <form:errors path="playerNumber" cssClass="error" element="div"/></p>
+                <p>
+                    <form:label path="goals">Number of goals</form:label>
+                    <form:input id="goals" path="goals" /> 
+                    <form:errors path="goals" cssClass="error" element="div"/></p>
                 <p><input type="submit" id="save" value="Save player"></p>
-            </form>
+            </form:form>
         </main>
     </body>
 </html>

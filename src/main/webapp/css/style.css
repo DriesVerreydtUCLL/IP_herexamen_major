@@ -46,6 +46,14 @@ nav ul li a{
 	font-weight: 200;
 }
 
+nav ul li form input{
+	color: #fff;
+	text-decoration: none;
+	display: block;
+	font-size: .85em;
+	font-weight: 200;
+}
+
 h2, main, footer {
 	padding: 15px 10px;
 }
