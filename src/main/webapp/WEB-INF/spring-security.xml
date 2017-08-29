@@ -8,9 +8,13 @@
 	http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
     <http auto-config="true">
+      
+        <intercept-url pattern="/player/rest**" access="permitAll" />
+        <intercept-url pattern="/rest**" access="permitAll" />
 	<intercept-url pattern="/index.htm" access="permitAll" />
 	<intercept-url pattern="/player**" access="hasRole('USER')" />
-        <intercept-url pattern="/player/**" access="hasRole('USER')" />
+        <intercept-url pattern="/player/**" access="hasRole('USER')" />   
+        <intercept-url pattern="/**" access="permitAll" />   
         <logout logout-url="/logout" delete-cookies="JSESSIONID" logout-success-url="/index.htm"/>
     </http>
 

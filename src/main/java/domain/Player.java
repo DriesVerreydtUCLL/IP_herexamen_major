@@ -14,14 +14,14 @@ import javax.persistence.Id;
 @Entity
 public class Player implements Serializable {
     
-    private String firstName;
-    private String lastName;
-    private int playerNumber;
-    private int goals;
-    private static final long serialVersionUID = 1L;
+    public String firstName;
+    public String lastName;
+    public int playerNumber;
+    public int goals;
+    public static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public Long id;
     
     public Player(){
         
